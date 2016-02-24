@@ -1,0 +1,28 @@
+---
+nginx:
+  build: ./roles/nginx
+  command: "/usr/local/bin/supervisord -n --configuration=/etc/supervisord.conf"
+  links:
+    - php
+  ports:
+    - "80:80"
+    - "443:443"
+  volumes:
+    - "/Users/bjohnson/Sites/apps:/home/deploy/apps"
+php:
+  build: ./roles/php-fpm
+  ports:
+    - "9000:9000"
+  volumes:
+    - "/Users/bjohnson/Sites/apps:/home/deploy/apps"
+  links:
+    - "mysql"
+    - "redis"
+mysql:
+  build: ./roles/mysql
+  ports:
+    - "3306:3306"
+redis:
+  image: redis:latest
+  ports:
+    - "6379:6379"

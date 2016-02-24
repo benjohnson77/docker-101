@@ -1,0 +1,7 @@
+nginx:
+  build: .
+
+  ports:
+    - 80:80
+    - 443:443
+  command: "/usr/local/bin/supervisord -n -c /etc/supervisord.conf"
